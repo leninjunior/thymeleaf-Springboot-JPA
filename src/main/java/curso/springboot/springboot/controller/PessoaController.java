@@ -24,10 +24,14 @@ public class PessoaController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/salvarpessoa") /* recebe pessoa do  html(action:salvarpessoa)
 																			 */
-	public String salvar(Pessoa pessoa) {
+	public ModelAndView salvar(Pessoa pessoa) {
 		pessoaReporitory.save(pessoa);
+		
+		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");  /*"Model" para mandar do model para a view*/
+		Iterable<Pessoa> pessoasIt = pessoaReporitory.findAll();
+		andView.addObject("pessoas", pessoasIt); /*passando o atributo que está no html*/
 
-		return "cadastro/cadastropessoa";
+		return andView;
 
 	}
 
