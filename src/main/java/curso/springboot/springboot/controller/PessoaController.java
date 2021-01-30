@@ -61,5 +61,19 @@ public class PessoaController {
 		modelAndView.addObject("pessoaobj", pessoa.get()); /*passar o objeto para tela(voltar para edição), passando no object*/
 		return modelAndView;
 	}
+	
+	@GetMapping("/excluirpessoa/{idpessoa}")
+	public ModelAndView excluir(@PathVariable("idpessoa") Long idpessoa) { /*interceptar a URL passando o idpessoa*/
+		
+		pessoaReporitory.deleteById(idpessoa); /*Deletar por id(lembrando do tipo)*/
+		
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");/*voltar para mesma tela*/
+		
+		modelAndView.addObject("pessoas", pessoaReporitory.findAll()); /*carregar todas as pessoas*/
+		modelAndView.addObject("pessoaobj", new Pessoa()); /*tem que passar o objeto vazio*/
+		return modelAndView;
+	}
+	
+	
 
 }
