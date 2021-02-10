@@ -24,8 +24,11 @@ public class PessoaController {
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa")
 	public ModelAndView inicio() {
 		
+		
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 		modelAndView.addObject("pessoaobj", new Pessoa()); /*retornar um objeto vazio*/
+		Iterable<Pessoa> pessoasIt = pessoaReporitory.findAll(); /*puxar os objetos*/
+		modelAndView.addObject("pessoas", pessoasIt); /*passando o atributo que está no html*/
 		return modelAndView;
 
 	}
@@ -36,7 +39,7 @@ public class PessoaController {
 		pessoaReporitory.save(pessoa);
 		
 		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");  /*"Model" para mandar do model para a view*/
-		Iterable<Pessoa> pessoasIt = pessoaReporitory.findAll();
+		Iterable<Pessoa> pessoasIt = pessoaReporitory.findAll(); /*puxar os objetos*/
 		andView.addObject("pessoas", pessoasIt); /*passando o atributo que está no html*/
 		andView.addObject("pessoaobj", new Pessoa()); /*passando objeto vazio*/
 		return andView;
@@ -83,9 +86,15 @@ public class PessoaController {
 		modelAndView.addObject("pessoas", pessoaReporitory.findPessoaByName(nomepesquisa)); /*query criado chamando o nomepesquisa*/
 		modelAndView.addObject("pessoaobj", new Pessoa()); /*tem que passar o objeto vazio*/
 		return modelAndView;
+}
+	
+	@GetMapping("/telefones/{idpessoa}")
+	public ModelAndView telefones(@PathVariable("idpessoa") Long idpessoa) { /*interceptar a URL passando o idpessoa*/
+		Optional<Pessoa> pessoa = pessoaReporitory.findById(idpessoa);/*Carregar objeto do banco de dados*/
+		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");/*voltar para mesma tela*/
 		
-		
-		
+		modelAndView.addObject("pessoaobj", pessoa.get()); /*passar o objeto para tela(voltar para edição), passando no object*/
+		return modelAndView;
 		
 	}
 
