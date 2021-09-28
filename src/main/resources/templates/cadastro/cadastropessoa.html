@@ -17,8 +17,16 @@
 
 	<h3>Curso de Spring Boot com Thymeleaf:</h3>
 
+	<div th:each="erro : ${msg}">
+	<span th:text="${erro}"> Erro</span>
+		
+	
+	</div>
 	<h5>Cadastro de Pessoa</h5>
 	<div class="row">
+	
+	
+	
 			<form action="salvarpessoa" id="formpessoa" method="post" th:object="${pessoaobj}"
 				class="col s12">
 			
@@ -91,29 +99,35 @@
 
 	<br>
 	<br>
-	<table class="striped">
+	<table class="centered">
 	<thead>
 	    <tr>
 		     <th>ID</th>
 		     <th>Nome</th>
 		     <th>Sobrenome</th>
-		     <th>Idade</th>
-		     <th>Editar</th>
+		      <th>Idade</th>
+		        <th>curso</th>
+		   	 <th>Editar</th>
 		     <th>Excluir</th>
 	    </tr>
   </thead>
-		<tr th:each="pessoa : ${pessoas}">
+		<tr th:each="pessoa : ${pessoas}" >
 			<td th:text="${pessoa.id}"></td>
 			<td ><a th:href="@{/telefones/{idpessoa}(idpessoa=${pessoa.id})}" ><span th:text="${pessoa.nome}"></span></a></td>
 			<td th:text="${pessoa.sobrenome}"></td>
 			<td th:text="${pessoa.idade}"></td>
+			
 			<td><a class="waves-effect waves-light btn-small"
 				th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Editar</a></td>
 			<td><a class="waves-effect waves-light btn-small"
 				th:href="@{/excluirpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Excluir</a></td>
 		</tr>
 
+    
+
 	</table>
+	
+	
 
 
 
